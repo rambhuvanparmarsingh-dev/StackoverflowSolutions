@@ -1,0 +1,171 @@
+Logic app - parse JSON to compose the email body
+You’ll need the following Logic-App workflow to group the hourly records by borderID and format them into a single text block. If you use this code/logic, 
+the problem will be solved and you can easily use the final string to send an email (for example through the “Send an email” action).
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "When_an_HTTP_request_is_received": {
+        "type": "Request",
+        "kind": "Http"
+      }
+    },
+    "actions": {
+      "Compose_Input": {
+        "type": "Compose",
+        "inputs": [
+          { "borderID": "1", "hour": "2025-10-02 00:00:00 - 2025-10-02 01:00:00" },
+          { "borderID": "1", "hour": "2025-10-02 01:00:00 - 2025-10-02 02:00:00" },
+          { "borderID": "1", "hour": "2025-10-02 02:00:00 - 2025-10-02 03:00:00" },
+          { "borderID": "2", "hour": "2025-10-02 00:00:00 - 2025-10-02 01:00:00" },
+          { "borderID": "2", "hour": "2025-10-02 01:00:00 - 2025-10-02 02:00:00" },
+          { "borderID": "2", "hour": "2025-10-02 02:00:00 - 2025-10-02 03:00:00" }
+        ]
+      },
+
+      "Parse_JSON": {
+        "type": "ParseJson",
+        "inputs": {
+          "content": "@outputs('Compose_Input')",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "borderID": { "type": "string" },
+                "hour": { "type": "string" }
+              },
+              "required": [ "borderID", "hour" ]
+            }
+          }
+        },
+        "runAfter": { "Compose_Input": [ "Succeeded" ] }
+      },
+
+      "Select_BorderIDs": {
+        "type": "Select",
+        "inputs": {
+          "from": "@body('Parse_JSON')",
+          "select": { "borderID": "@item()?['borderID']" }
+        },
+        "runAfter": { "Parse_JSON": [ "Succeeded" ] }
+      },
+
+      "Compose_UniqueBorderIDs": {
+        "type": "Compose",
+        "inputs": "@union(body('Select_BorderIDs'), body('Select_BorderIDs'))",
+        "runAfter": { "Select_BorderIDs": [ "Succeeded" ] }
+      },
+
+      "Initialize_Report": {
+        "type": "InitializeVariable",
+        "inputs": {
+          "variables": [ { "name": "Report", "type": "string" } ]
+        },
+        "runAfter": { "Compose_UniqueBorderIDs": [ "Succeeded" ] }
+      },
+
+      "Initialize_FirstBorder": {
+        "type": "InitializeVariable",
+        "inputs": {
+          "variables": [ { "name": "FirstBorder", "type": "boolean", "value": true } ]
+        },
+        "runAfter": { "Initialize_Report": [ "Succeeded" ] }
+      },
+
+      "Initialize_Lines": {
+        "type": "InitializeVariable",
+        "inputs": {
+          "variables": [ { "name": "Lines", "type": "string" } ]
+        },
+        "runAfter": { "Initialize_FirstBorder": [ "Succeeded" ] }
+      },
+
+      "Initialize_FirstLine": {
+        "type": "InitializeVariable",
+        "inputs": {
+          "variables": [ { "name": "FirstLine", "type": "boolean", "value": true } ]
+        },
+        "runAfter": { "Initialize_Lines": [ "Succeeded" ] }
+      },
+
+      "For_each_Border": {
+        "type": "Foreach",
+        "foreach": "@outputs('Compose_UniqueBorderIDs')",
+        "runtimeConfiguration": { "concurrency": { "repetitions": 1 } },
+        "actions": {
+          "Reset_Lines": {
+            "type": "SetVariable",
+            "inputs": { "name": "Lines", "value": "" }
+          },
+
+          "Reset_FirstLine": {
+            "type": "SetVariable",
+            "inputs": { "name": "FirstLine", "value": true },
+            "runAfter": { "Reset_Lines": [ "Succeeded" ] }
+          },
+
+          "Filter_Rows_For_Border": {
+            "type": "Query",
+            "inputs": {
+              "from": "@body('Parse_JSON')",
+              "where": "@equals(item()?['borderID'], items('For_each_Border')?['borderID'])"
+            },
+            "runAfter": { "Reset_FirstLine": [ "Succeeded" ] }
+          },
+
+          "For_each_Row": {
+            "type": "Foreach",
+            "foreach": "@body('Filter_Rows_For_Border')",
+            "runtimeConfiguration": { "concurrency": { "repetitions": 1 } },
+            "actions": {
+              "Append_Bullet": {
+                "type": "AppendToStringVariable",
+                "inputs": {
+                  "name": "Lines",
+                  "value": "@if(variables('FirstLine'), concat('• ', item()?['hour']), concat(decodeUriComponent('%0A'), '• ', item()?['hour']))"
+                }
+              },
+              "Mark_Not_FirstLine": {
+                "type": "SetVariable",
+                "inputs": { "name": "FirstLine", "value": false },
+                "runAfter": { "Append_Bullet": [ "Succeeded" ] }
+              }
+            },
+            "runAfter": { "Filter_Rows_For_Border": [ "Succeeded" ] }
+          },
+
+          "Append_Border_Block": {
+            "type": "AppendToStringVariable",
+            "inputs": {
+              "name": "Report",
+              "value": "@if(variables('FirstBorder'), concat('For borderID = ', items('For_each_Border')?['borderID'], ', results.', decodeUriComponent('%0A'), 'The following hourly intervals exceeded the threshold:', decodeUriComponent('%0A'), variables('Lines')), concat(decodeUriComponent('%0A'), decodeUriComponent('%0A'), 'For borderID = ', items('For_each_Border')?['borderID'], ', results.', decodeUriComponent('%0A'), 'The following hourly intervals exceeded the threshold:', decodeUriComponent('%0A'), variables('Lines')))"
+            },
+            "runAfter": { "For_each_Row": [ "Succeeded" ] }
+          },
+
+          "Mark_Not_FirstBorder": {
+            "type": "SetVariable",
+            "inputs": { "name": "FirstBorder", "value": false },
+            "runAfter": { "Append_Border_Block": [ "Succeeded" ] }
+          }
+        },
+        "runAfter": { "Initialize_FirstLine": [ "Succeeded" ] }
+      },
+
+      "Compose_Output": {
+        "type": "Compose",
+        "inputs": "@variables('Report')",
+        "runAfter": { "For_each_Border": [ "Succeeded" ] }
+      }
+    },
+    "outputs": {},
+    "parameters": {
+      "$connections": { "type": "Object", "defaultValue": {} }
+    }
+  },
+  "parameters": {
+    "$connections": { "type": "Object", "value": {} }
+  }
+}
