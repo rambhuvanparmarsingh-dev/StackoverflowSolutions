@@ -1,0 +1,287 @@
+Logic App Parsing JSON data with a Manifest
+I receive from a HTTP Request into my Logic App with the following JSON data...
+
+{
+    "statement_id": "01f09dfd-5957-1c7b-a85f-fe155cbc536b",
+    "status": {
+        "state": "SUCCEEDED"
+    },
+    "manifest": {
+        "format": "JSON_ARRAY",
+        "schema": {
+            "column_count": 11,
+            "columns": [
+                {
+                    "name": "header_id",
+                    "type_text": "BIGINT",
+                    "type_name": "LONG",
+                    "position": 0
+                },
+                {
+                    "name": "risk_reference",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 1
+                },
+                {
+                    "name": "section_reference",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 2
+                },
+                {
+                    "name": "insured",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 3
+                },
+                {
+                    "name": "reinsured",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 4
+                },
+                {
+                    "name": "inception_date",
+                    "type_text": "TIMESTAMP",
+                    "type_name": "TIMESTAMP",
+                    "position": 5
+                },
+                {
+                    "name": "expiry_date",
+                    "type_text": "TIMESTAMP",
+                    "type_name": "TIMESTAMP",
+                    "position": 6
+                },
+                {
+                    "name": "underwriter",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 7
+                },
+                {
+                    "name": "class_of_business",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 8
+                },
+                {
+                    "name": "hlrg_as_of_current_year",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 9
+                },
+                {
+                    "name": "llrg",
+                    "type_text": "STRING",
+                    "type_name": "STRING",
+                    "position": 10
+                }
+            ]
+        },
+        "total_chunk_count": 1,
+        "chunks": [
+            {
+                "chunk_index": 0,
+                "row_offset": 0,
+                "row_count": 2
+            }
+        ],
+        "total_row_count": 2,
+        "truncated": false
+    },
+    "result": {
+        "chunk_index": 0,
+        "row_offset": 0,
+        "row_count": 2,
+        "data_array": [
+            [
+                "12345",
+                "R-AF010999",
+                "24CM58048999",
+                "The Company",
+                null,
+                "2024-10-18T00:00:00.000Z",
+                "2025-10-17T23:59:59.000Z",
+                "Joe Bloggs",
+                "Crisis Management",
+                "H:Crisis Management",
+                "LCM:Dodgy"
+            ],
+            [
+                "34567",
+                "R-AF004998",
+                "24MH58001777",
+                "Stark Ltd",
+                null,
+                "2024-10-19T00:00:00.000Z",
+                "2025-10-18T23:59:59.000Z",
+                "Jane Doe",
+                "Marine",
+                "H:Marine",
+                "LMH:Shark Expert"
+            ]
+        ]
+    }
+}
+I need to get just the header_id values (12345 and 34567) and use them to then call an API using the HTTP Connector.
+
+I have tried to Parse the JSON data and I am able to get the data_array object but I am stuck here.
+
+---------------------------------------------------------------------------------------------------
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "triggers": {
+            "When_an_HTTP_request_is_received": {
+                "type": "Request",
+                "kind": "Http"
+            }
+        },
+        "actions": {
+            "Parse_JSON": {
+                "type": "ParseJson",
+                "inputs": {
+                    "content": "@triggerBody()",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "statement_id": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "object",
+                                "properties": {
+                                    "state": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "manifest": {
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "type": "string"
+                                    },
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "column_count": {
+                                                "type": "integer"
+                                            },
+                                            "columns": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "type_text": {
+                                                            "type": "string"
+                                                        },
+                                                        "type_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "position": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name",
+                                                        "type_text",
+                                                        "type_name",
+                                                        "position"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "total_chunk_count": {
+                                        "type": "integer"
+                                    },
+                                    "chunks": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "chunk_index": {
+                                                    "type": "integer"
+                                                },
+                                                "row_offset": {
+                                                    "type": "integer"
+                                                },
+                                                "row_count": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "chunk_index",
+                                                "row_offset",
+                                                "row_count"
+                                            ]
+                                        }
+                                    },
+                                    "total_row_count": {
+                                        "type": "integer"
+                                    },
+                                    "truncated": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "result": {
+                                "type": "object",
+                                "properties": {
+                                    "chunk_index": {
+                                        "type": "integer"
+                                    },
+                                    "row_offset": {
+                                        "type": "integer"
+                                    },
+                                    "row_count": {
+                                        "type": "integer"
+                                    },
+                                    "data_array": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "runAfter": {}
+            },
+            "Response": {
+                "type": "Response",
+                "kind": "Http",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@{body('Parse_JSON')?['result']?['data_array'][0]?[0]}\n@{body('Parse_JSON')?['result']?['data_array'][1]?[0]}"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "type": "Object",
+                "defaultValue": {}
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "type": "Object",
+            "value": {}
+        }
+    }
+}
