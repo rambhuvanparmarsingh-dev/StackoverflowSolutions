@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimName": {
+            "value": "biztalk-rp"
+        },
+        "location": {
+            "value": "centralindia"
+        },
+        "tier": {
+            "value": "Developer"
+        },
+        "capacity": {
+            "value": "1"
+        },
+        "adminEmail": {
+            "value": "rambhuvanparmarsingh@gmail.com"
+        },
+        "organizationName": {
+            "value": "biztalk-rp-apim"
+        },
+        "virtualNetworkType": {
+            "value": "None"
+        },
+        "tagsByResource": {
+            "value": {}
+        },
+        "vnet": {
+            "value": {}
+        },
+        "zones": {
+            "value": []
+        },
+        "customProperties": {
+            "value": {}
+        },
+        "identity": {
+            "value": {
+                "type": "None"
+            }
+        },
+        "appInsightsObject": {
+            "value": {
+                "id": null,
+                "name": null
+            }
+        },
+        "privateDnsDeploymentName": {
+            "value": "PrivateDNS-1762612587445"
+        },
+        "subnetDeploymentName": {
+            "value": "UpdateSubnetDeployment-1762612587445"
+        }
+    }
+}
