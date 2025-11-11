@@ -36,3 +36,20 @@ graph TD
     B --> C[Securely Query Azure DevOps APIs]
     C --> D[Return Raw Data to AI Agent]
     D --> E[AI Analyzes & Responds]
+
+1. Data Retrieval (MCP Server)
+
+Securely authenticates using Personal Access Token (PAT) or Azure AD
+Executes WIQL queries, REST API calls to fetch:
+Work items (bugs, tasks, user stories)
+Pull requests & code reviews
+Pipelines, builds, releases
+Test plans & results
+Repositories & commits
+
+
+2. AI Analysis (Your Assistant)
+
+Processes raw data
+Generates summaries, insights, recommendations
+Suggests actions or automation
