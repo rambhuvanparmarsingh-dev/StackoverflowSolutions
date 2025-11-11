@@ -3,6 +3,6 @@
 ```mermaid
 graph TD
     A[You Ask AI] --> B{MCP Server}
-    B --> C[Securely Query Azure DevOps APIs<br/>(WIQL queries + REST API calls)]
+    B --> C["Securely Query Azure DevOps APIs\n(WIQL queries + REST API calls)"]
     C --> D[Return Raw Data to AI Agent]
     D --> E[AI Analyzes & Responds]
