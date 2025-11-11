@@ -8,6 +8,11 @@ Azure DevOps Model Context Protocol (MCP) Server is a **secure, local AI agent b
 
 It runs **locally in your environment**, acts as a **trusted proxy**, and empowers AI agents to perform **context-aware operations** using natural language, all while maintaining **enterprise-grade security and compliance**.
 
+There are two types of MCP Server deployments:
+
+1. **Azure DevOps MCP Server** – Focused on **Azure DevOps Services** (cloud)
+2. **Azure DevOps Server MCP** – For **on-premises Azure DevOps Server** (self-hosted)
+
 ---
 
 ## Benefits of Azure DevOps MCP Server
