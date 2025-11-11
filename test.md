@@ -2,7 +2,7 @@
 
 | Benefit | Description |
 |-------|-----------|
-| **Zero Data Exfiltration** | Runs **100% locally** — no project data, code, or work items ever leave your network or device. Full compliance with GDPR, SOC 2, and internal security policies. |
+| **Zero Data Exfiltration** | Runs locally — no project data leaves your network or device |
 | **AI in Agent Mode** | Your AI doesn’t just *chat* — it **executes tools**, fetches live data, and performs actions like querying work items or checking build status. |
 | **Natural Language DevOps** | Ask in plain English: _“What’s blocking my sprint?”_ → Get **real-time blockers with owners, duration, and suggested next steps**. |
 | **No Context Switching** | Stay in **VS Code, Cursor, or your IDE** — AI pulls Azure DevOps context **automatically**. No more Alt+Tabbing to the web UI. |
