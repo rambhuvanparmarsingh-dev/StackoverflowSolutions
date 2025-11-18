@@ -1,27 +1,26 @@
-# Slide: Azure DevOps MCP Server  
-**Generative AI in Azure DevOps – Born to Automate, Built to Integrate**
+# Azure DevOps MCP Server – Common Use Cases
 
----
+Ask your DevOps data anything using natural language — securely and on-premises.
 
-## Challenges  
-> *Developers & teams struggle with context, speed, and security in AI-driven workflows*
+| Scenario                | Example Prompt                                                                                 |
+|-------------------------|------------------------------------------------------------------------------------------------|
+| **Standup Prep**        | “Summarize my work yesterday and blockers”                                                     |
+| **PR Review**           | “Get PR #123 and linked work items with business impact”                                       |
+| **Pipeline Debug**      | “Why did build #4567 fail? Show logs and failed tests”                                         |
+| **Release Readiness**   | “Is Sprint 42 ready to ship? List open bugs and test coverage”                                  |
+| **Backlog Grooming**    | “Prioritize backlog for 2-week sprint with 3 devs”                                              |
+| **Sprint Blockers**     | “What's blocking our sprint? Suggest resolutions”                                              |
+| **Bug Triage**          | “Triage open bugs in current iteration by severity, impact, and assign owners”                 |
+| **Velocity Analysis**   | “Analyze team velocity over last 5 sprints and predict capacity for next”                      |
+| **Incident Response**   | “Summarize incident #789 status, root cause, and mitigation steps”                             |
+| **Dependency Mapping**  | “Map dependencies and risks for Epic #45 work items”                                           |
+| **Retrospective Prep**  | “Generate sprint 42 retrospective: achievements, risks, and action items”                      |
+| **Test Suite Review**   | “Review test coverage gaps for feature branch #main and recommend additions”                   |
 
-| Challenge | Impact |
-|---------|--------|
-| **Manual context lookup** | 30–60 min lost per dev daily |
-| **Data leaves network** | Risk of IP exposure, compliance violations |
-| **Generic AI responses** | No awareness of work items, PRs, or pipelines |
-| **Tool switching fatigue** | Devs jump between IDE, Azure DevOps UI, Slack |
-| **Slow onboarding** | New hires take 1–2 weeks to understand project state |
+### Useful Links
+- [Daily Standup Preparation](https://learn.microsoft.com/en-us/azure/devops/mcp-server/mcp-server-overview?view=azure-devops#daily-standup-preparation)
+- [Sprint Planning Support](https://learn.microsoft.com/en-us/azure/devops/mcp-server/mcp-server-overview?view=azure-devops#sprint-planning-support)
+- [Code Review Workflow](https://learn.microsoft.com/en-us/azure/devops/mcp-server/mcp-server-overview?view=azure-devops#code-review-workflow)
+- [MCP Server Overview](https://learn.microsoft.com/en-us/azure/devops/mcp-server/mcp-server-overview?view=azure-devops)
 
----
-
-## Capgemini’s Solution & Features  
-**Azure DevOps MCP Server** – *Your AI Agent, Fully Connected, Fully Secure*
-
-```mermaid
-graph TD
-    A[You Ask AI] --> B{MCP Server}
-    B --> C["Securely Query Azure DevOps\n(WIQL + REST APIs)"]
-    C --> D[Return Live Data]
-    D --> E[AI Analyzes & Responds]
+Powered by **Azure DevOps MCP Server** – your private, local Copilot for Azure DevOps.
