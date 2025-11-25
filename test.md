@@ -1,12 +1,12 @@
-# Playwright MCP for Browser Automation — Key Features
+# Benefits of Playwright MCP Server
 
-| Feature                     | Description |
-|-----------------------------|-------------|
-| **Console Log Monitoring**      | Captures and analyzes browser console output in real-time via Trace Viewer, UI Mode, or MCP tools; useful for debugging errors, warnings, or network issues during agent exploration or test runs. |
-| **Code Generation**             | AI agents (e.g., Generator) auto-produce executable Playwright tests from natural language prompts or Markdown plans, incorporating locators, assertions, and fixtures for rapid E2E scripting. |
-| **Web Scraping**                | Extracts structured data from dynamic UIs using accessibility trees and DOM queries; MCP tools enable AI-guided scraping of elements, tables, or APIs without visual dependencies. |
-| **Screenshot Capabilities**    | Generates full-page or element-specific screenshots for visual regression testing; integrated with tracing for failure captures and UI validation in healing workflows. |
-| **JavaScript Execution**        | Runs custom JS scripts in browser contexts to manipulate state, evaluate expressions, or simulate complex behaviors, accessible via MCP for agent-driven automation. |
-| **Basic Web Interaction**       | Supports navigation (`page.goto`), clicking, form filling (`fill`), dropdown selection, hover effects, and more; MCP exposes these as tools for precise, deterministic AI control. |
-| **Content Retrieval**           | Fetches visible text, HTML, titles, or network responses; Planner agents synthesize this into test plans, while Healer uses it for UI inspections and repairs. |
-| **API Testing Integration**     | Intercepts and mocks HTTP requests/responses (e.g., via `routeFromHAR` or network logs); validates payloads, status codes, and auth in E2E flows, with MCP enabling AI to query and assert API behavior dynamically. |
+| Benefit                          | Description                                                                                                                    |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| **Natural Language Testing**         | Write tests in plain English: "Go to the login page, fill the credentials, and check if the dashboard loads" instead of writing code. |
+| **AI-Powered Test Generation**       | The AI generates robust, context-aware Playwright scripts by observing the live browser state and your instructions.                     |
+| **Zero Data Exfiltration**           | Runs 100% locally — the browser automation and any data on the pages you visit never leave your machine.                                     |
+| **Rapid Test Debugging**             | Ask the AI: "Why is this test failing?" — it will re-run the test, inspect elements, and analyze the page to diagnose the issue instantly.   |
+| **Visual Testing & Screenshots**     | Automate visual checks. Command the AI to take screenshots of specific components or full pages for comparison and regression testing.       |
+| **Stays in Your IDE**                | No context switching to a separate test runner or browser window. The AI handles everything in the background and returns results directly to your chat. |
+| **Automated Test Maintenance**       | As your UI evolves, the AI can automatically refactor and update selectors in your test suites, dramatically reducing maintenance overhead. |
+| **Free & Open-Source**               | Built entirely on the open-source Playwright framework. No licensing fees or vendor lock-in.                                               |
