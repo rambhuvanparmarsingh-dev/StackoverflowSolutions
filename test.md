@@ -1,11 +1,8 @@
-# Common Use Cases for Playwright MCP Server
+# Why These Benefits Matter (Real-World Impact)
 
-| Scenario                           | Example Prompt                                                                                                                          |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| **End-to-End Test Generation**         | "Generate a Playwright test to log into the application, navigate to the user profile, and update the email address."                   |
-| **API Testing**                        | "Test the /api/users endpoint: Create a new user with POST, verify with GET, update with PUT, and delete with DELETE."                   |
-| **UI & API Integration Test**          | "Submit the contact form via the UI, then use the API to verify the submission exists in the database."                                 |
-| **Debugging a Failing Test**           | "My test login.spec.js:15 is failing. Run it, monitor the console logs, and tell me what's visible on the screen at the point of failure." |
-| **Web Scraping & Data Extraction**     | "Go to the orders page, scrape the last 5 order IDs and their statuses, and list them in a table for me."                               |
-| **Performance Snapshot**               | "Navigate to the homepage, take a screenshot, and measure the time it takes for the main hero image to load."                           |
-| **Form Validation Testing**            | "Test the registration form: submit it empty, then with an invalid email, and verify the correct error messages appear."                |
+| Role                  | Daily Win                                                                                                      |
+|-----------------------|----------------------------------------------------------------------------------------------------------------|
+| **QA Engineer**           | Automate test case creation and execution **3× faster** without needing deep coding knowledge.                 |
+| **Developer**             | Instantly generate end-to-end tests for new features right after coding — enabling true **shift-left testing**. |
+| **SDET / Test Lead**      | Rapidly build, debug, and maintain complex scenarios while focusing on **strategy** instead of boilerplate code. |
+| **DevOps Engineer**       | Seamlessly integrate AI-generated, self-healing test scripts into CI/CD pipelines for reliable **automated quality gates**. |
