@@ -1,13 +1,11 @@
-# Benefits of Playwright MCP Server
+# Common Use Cases for Playwright MCP Server
 
-| Benefit                          | Description                                                                                                                    |
-|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| **Natural Language Testing**         | Write tests in plain English: "Go to the login page, fill the credentials, and check if the dashboard loads" instead of writing code. |
-| **Unified API + UI Testing**         | Seamlessly combine browser interactions with direct API calls in the same test: "Submit the form via UI and verify the data was created via API." |
-| **AI-Powered Test Generation**       | The AI observes the live browser and your instructions to generate robust, context-aware Playwright scripts automatically.                     |
-| **Zero Data Exfiltration**           | Runs 100% locally — all browser automation and page data never leave your machine.                                                    |
-| **Rapid Test Debugging**             | Just ask: "Why is this test failing?" — the AI re-runs the test, inspects elements, checks console logs, and explains the exact issue.          |
-| **Visual Testing & Screenshots**     | Automate visual regression: tell the AI to capture full pages or specific components and compare them across runs.                           |
-| **Stays in Your IDE**                | No switching windows or tools. Everything happens in the background and results appear directly in your chat/editor.                           |
-| **Automated Test Maintenance**       | When the UI changes, the AI automatically updates selectors and logic in your test suites, eliminating most manual maintenance work.          |
-| **Free & Open-Source**               | Built on the fully open-source Playwright framework. No licensing costs, no vendor lock-in, and full community support.                       |
+| Scenario                           | Example Prompt                                                                                                                          |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| **End-to-End Test Generation**         | "Generate a Playwright test to log into the application, navigate to the user profile, and update the email address."                   |
+| **API Testing**                        | "Test the /api/users endpoint: Create a new user with POST, verify with GET, update with PUT, and delete with DELETE."                   |
+| **UI & API Integration Test**          | "Submit the contact form via the UI, then use the API to verify the submission exists in the database."                                 |
+| **Debugging a Failing Test**           | "My test login.spec.js:15 is failing. Run it, monitor the console logs, and tell me what's visible on the screen at the point of failure." |
+| **Web Scraping & Data Extraction**     | "Go to the orders page, scrape the last 5 order IDs and their statuses, and list them in a table for me."                               |
+| **Performance Snapshot**               | "Navigate to the homepage, take a screenshot, and measure the time it takes for the main hero image to load."                           |
+| **Form Validation Testing**            | "Test the registration form: submit it empty, then with an invalid email, and verify the correct error messages appear."                |
